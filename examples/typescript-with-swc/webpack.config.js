@@ -7,11 +7,13 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = {
   mode: isDevelopment ? 'development' : 'production',
-  devServer: {
-    client: { overlay: false },
-  },
   entry: {
-    main: './src/index.tsx',
+    main: ['@gatsbyjs/webpack-hot-middleware/client', './src/index.tsx'],
+  },
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
   },
   module: {
     rules: [
@@ -46,7 +48,12 @@ module.exports = {
     ],
   },
   plugins: [
-    isDevelopment && new ReactRefreshPlugin(),
+    isDevelopment && new webpack.HotModuleReplacementPlugin(),
+    isDevelopment && new ReactRefreshPlugin({
+      overlay: {
+        sockIntegration: 'whm',
+      },
+    }),
     new ForkTsCheckerWebpackPlugin(),
     new HtmlWebpackPlugin({
       filename: './index.html',

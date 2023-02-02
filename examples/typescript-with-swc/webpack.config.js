@@ -2,6 +2,7 @@ const path = require('path');
 const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
@@ -9,12 +10,13 @@ module.exports = {
   mode: isDevelopment ? 'development' : 'production',
   entry: {
     main: ['@gatsbyjs/webpack-hot-middleware/client', './src/index.tsx'],
+    main: ['./src/index.tsx'],
   },
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: '/',
-  },
+  // output: {
+  //   filename: 'bundle.js',
+  //   path: path.resolve(__dirname, 'dist'),
+  //   publicPath: '/',
+  // },
   module: {
     rules: [
       {
@@ -48,7 +50,7 @@ module.exports = {
     ],
   },
   plugins: [
-    isDevelopment && new webpack.HotModuleReplacementPlugin(),
+    // isDevelopment && new webpack.HotModuleReplacementPlugin(),
     isDevelopment && new ReactRefreshPlugin({
       overlay: {
         sockIntegration: 'whm',

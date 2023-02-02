@@ -1,4 +1,3 @@
-import { hot } from 'react-hot-loader/root';
 import { lazy, Suspense } from 'react';
 import { ArrowFunction } from './ArrowFunction';
 import ClassDefault from './ClassDefault';
@@ -23,4 +22,4 @@ function App() {
   );
 }
 
-export default hot(App);
+export default App;

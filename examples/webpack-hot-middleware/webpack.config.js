@@ -8,7 +8,8 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 module.exports = {
   mode: isDevelopment ? 'development' : 'production',
   entry: {
-    main: ['react-hot-loader/patch', './src/index.js'],
+    main: ['@gatsbyjs/webpack-hot-middleware/client', './src/index.js'],
+    // main: ['react-hot-loader/patch', './src/index.js'],
   },
   output: {
     filename: 'bundle.js',
@@ -20,7 +21,16 @@ module.exports = {
       {
         test: /\.jsx?$/,
         include: path.join(__dirname, 'src'),
-        use: 'babel-loader',
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              plugins: [
+                isDevelopment && require.resolve('react-refresh/babel'),
+              ].filter(Boolean),
+            },
+          },
+        ],
       },
     ],
   },
@@ -39,8 +49,8 @@ module.exports = {
   ].filter(Boolean),
   resolve: {
     extensions: ['.js', '.jsx'],
-    alias: {
-      'react-dom': '@hot-loader/react-dom',
-    },
+    // alias: {
+    //   'react-dom': '@hot-loader/react-dom',
+    // },
   },
 };

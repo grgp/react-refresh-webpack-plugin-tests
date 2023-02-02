@@ -1,3 +1,3 @@
 export function FunctionNamedInsideClassNamed() {
-  return <h1>Named Export Function</h1>;
+  return <h1>Named Export Function yeee</h1>;
 }

@@ -8,7 +8,7 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 module.exports = {
   mode: isDevelopment ? 'development' : 'production',
   entry: {
-    main: ['@gatsbyjs/webpack-hot-middleware/client', './src/index.js'],
+    main: ['react-hot-loader/patch', './src/index.js'],
   },
   output: {
     filename: 'bundle.js',
@@ -39,5 +39,8 @@ module.exports = {
   ].filter(Boolean),
   resolve: {
     extensions: ['.js', '.jsx'],
+    alias: {
+      'react-dom': '@hot-loader/react-dom',
+    },
   },
 };

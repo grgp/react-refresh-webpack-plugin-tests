@@ -5,7 +5,7 @@ export class ClassNamed extends Component {
   render() {
     return (
       <div style={{ background: 'green' }}>
-        <h3>Class Named ahaha</h3>
+        <h3>Class Named test</h3>
         <div style={{ marginLeft: 32 }}>
           <FunctionNamedInsideClassNamed />
         </div>

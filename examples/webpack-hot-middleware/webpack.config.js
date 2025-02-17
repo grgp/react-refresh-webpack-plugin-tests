@@ -8,13 +8,16 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 module.exports = {
   mode: isDevelopment ? 'development' : 'production',
   entry: {
-    main: ['webpack-hot-middleware/client', './src/index.js'], 
-    // main: ['react-hot-loader/patch', './src/index.js'],
+    main: ['webpack-hot-middleware/client', './src/index.js'],
+    admin: ['webpack-hot-middleware/client', './src/admin.js'],
+    store: ['webpack-hot-middleware/client', './src/store.js'],
   },
   output: {
-    filename: 'bundle.js',
+    filename: isDevelopment ? '[name].bundle.js' : '[name].[contenthash].js',
+    chunkFilename: isDevelopment ? '[name].chunk.js' : '[name].[contenthash].chunk.js',
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
+    clean: true,
   },
   module: {
     rules: [
@@ -24,15 +27,29 @@ module.exports = {
         use: [
           {
             loader: 'babel-loader',
-            // options: {
-            //   plugins: [
-            //     isDevelopment && require.resolve('react-refresh/babel'),
-            //   ].filter(Boolean),
-            // },
           },
         ],
       },
     ],
+  },
+  optimization: {
+    runtimeChunk: 'single',
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+        common: {
+          name: 'common',
+          minChunks: 2,
+          chunks: 'all',
+          priority: -20,
+        },
+      },
+    },
   },
   plugins: [
     isDevelopment && new webpack.HotModuleReplacementPlugin(),
@@ -43,14 +60,22 @@ module.exports = {
         },
       }),
     new HtmlWebpackPlugin({
-      filename: './index.html',
+      filename: 'index.html',
       template: './public/index.html',
+      chunks: ['main'],
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'admin.html',
+      template: './public/index.html',
+      chunks: ['admin'],
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'store.html',
+      template: './public/index.html',
+      chunks: ['store'],
     }),
   ].filter(Boolean),
   resolve: {
     extensions: ['.js', '.jsx'],
-    // alias: {
-    //   'react-dom': '@hot-loader/react-dom',
-    // },
   },
 };

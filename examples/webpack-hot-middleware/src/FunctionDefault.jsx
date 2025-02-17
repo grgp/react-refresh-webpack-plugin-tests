@@ -1,5 +1,5 @@
 function FunctionDefault() {
-  return <h1>Default Export Function heheheh webpack </h1>;
+  return <h3>Default Export Function heheheh webpack </h3>;
 }
 
 export default FunctionDefault;

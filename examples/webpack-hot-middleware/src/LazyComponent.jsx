@@ -1,5 +1,5 @@
 function LazyComponent() {
-  return <h1>Lazy Component</h1>;
+  return <h3>Lazy Component</h3>;
 }
 
 export default LazyComponent;
